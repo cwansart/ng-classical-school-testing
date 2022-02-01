@@ -1,7 +1,24 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { SearchComponent } from './search/search.component';
 import { By } from '@angular/platform-browser';
 import { SearchInputComponent } from './search/search-input/search-input.component';
+import { HttpClient } from '@angular/common/http';
+import { of } from 'rxjs';
+
+const mockUsers = [
+  {
+    id: 1,
+    firstName: 'Maria',
+    lastName: 'Musterfrau',
+    phoneNumber: '000000000',
+    dateOfBirth: '1990-01-01T00:00:00.000Z',
+  },
+];
 
 describe('Search', () => {
   let fixture: ComponentFixture<SearchComponent>;
@@ -10,6 +27,17 @@ describe('Search', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SearchComponent, SearchInputComponent],
+      providers: [
+        {
+          // TODO: For some reason I had issues with the HttpTestingClient, need to investigate it later.
+          provide: HttpClient,
+          useValue: {
+            get: <T>() => {
+              return of(mockUsers);
+            },
+          },
+        },
+      ],
     }).compileComponents();
   });
 
@@ -28,7 +56,7 @@ describe('Search', () => {
      * This test accesses the input fields directly and triggers
      * update events on them.
      */
-    it('search for Maria Musterfrau', () => {
+    it('search for Maria Musterfrau', fakeAsync(() => {
       const firstNameInput: HTMLInputElement = fixture.debugElement.query(
         By.css('#vorname-text-input')
       ).nativeElement;
@@ -41,19 +69,26 @@ describe('Search', () => {
 
       firstNameInput.dispatchEvent(new Event('blur'));
       lastNameInput.dispatchEvent(new Event('blur'));
+      tick();
+      fixture.detectChanges();
 
       const searchButton: HTMLInputElement = fixture.debugElement.query(
         By.css('#search-button')
       ).nativeElement;
       searchButton.dispatchEvent(new Event('click'));
+      tick();
       fixture.detectChanges();
 
-      const searchResults: HTMLPreElement = fixture.debugElement.query(
+      console.log('111', fixture);
+      const searchResults = fixture.debugElement.query(
         By.css('#search-results')
-      ).nativeElement;
+      );
 
-      expect(searchResults.innerText).toContain(`"phoneNumber": "000000000"`);
-    });
+      expect(searchResults).not.toBeNull();
+      expect(searchResults.nativeElement.innerText).toContain(
+        `"phoneNumber": "000000000"`
+      );
+    }));
 
     /**
      * As a user
@@ -64,7 +99,7 @@ describe('Search', () => {
      * update events on them.
      */
 
-    it('search for non-existing Harald Lesch', () => {
+    it('search for non-existing Harald Lesch', fakeAsync(() => {
       const firstNameInput: HTMLInputElement = fixture.debugElement.query(
         By.css('#vorname-text-input')
       ).nativeElement;
@@ -77,11 +112,14 @@ describe('Search', () => {
 
       firstNameInput.dispatchEvent(new Event('blur'));
       lastNameInput.dispatchEvent(new Event('blur'));
+      tick();
+      fixture.detectChanges();
 
       const searchButton: HTMLInputElement = fixture.debugElement.query(
         By.css('#search-button')
       ).nativeElement;
       searchButton.dispatchEvent(new Event('click'));
+      tick();
       fixture.detectChanges();
 
       const searchResults = fixture.debugElement.query(
@@ -89,12 +127,9 @@ describe('Search', () => {
       );
 
       expect(searchResults).toBeNull();
-    });
+    }));
   });
 
-  /**
-   *
-   */
   xdescribe('component tests', () => {
     it('search for Maria Musterfrau', () => {
       component.valueChange({

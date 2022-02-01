@@ -7,6 +7,7 @@ import { SearchComponent } from './search/search.component';
 import { SearchInputComponent } from './search/search-input/search-input.component';
 import { OverviewComponent } from './overview/overview.component';
 import { OverviewDetailComponent } from './overview/overview-detail/overview-detail.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -14,13 +15,10 @@ import { OverviewDetailComponent } from './overview/overview-detail/overview-det
     SearchComponent,
     SearchInputComponent,
     OverviewComponent,
-    OverviewDetailComponent
+    OverviewDetailComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

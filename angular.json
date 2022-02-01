@@ -71,7 +71,8 @@
               "browserTarget": "ng-classical-school-testing:build:production"
             },
             "development": {
-              "browserTarget": "ng-classical-school-testing:build:development"
+              "browserTarget": "ng-classical-school-testing:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

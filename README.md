@@ -9,3 +9,7 @@ The tests coverage 100 % of the code with just 2 tests. The tests are not implem
 Run `npm run test` to start the tests. Chrome is required.
 
 After running the tests there will be a coverage folder which contains an index.html.
+
+## Run app locally
+
+First start the mockserver via `npm run mockserver`. Then run the app: `npm start`.

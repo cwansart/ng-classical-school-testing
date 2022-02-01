@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DataService, ResultData } from './data.service';
-import { last } from 'rxjs/operators';
+import { DataService } from './data.service';
 
 export interface SearchResult {
   phoneNumber: string;
@@ -10,26 +9,22 @@ export interface SearchResult {
   providedIn: 'root',
 })
 export class SearchService {
-  private users: ResultData[] = [];
+  constructor(private readonly dataService: DataService) {}
 
-  constructor(dataService: DataService) {
-    dataService.getAll().subscribe((users) => {
-      this.users = users;
-      console.log('users', this.users);
+  search(lastName: string, firstName: string): Promise<SearchResult> {
+    return new Promise<SearchResult>((resolve, reject) => {
+      this.dataService.getAll().subscribe((users) => {
+        const searchResult = users.filter(
+          (user) => user.lastName === lastName && user.firstName === firstName
+        );
+        if (searchResult.length > 0) {
+          resolve({
+            phoneNumber: searchResult[0].phoneNumber,
+          });
+        } else {
+          reject();
+        }
+      });
     });
-  }
-
-  search(lastName: string, firstName: string): SearchResult | undefined {
-    const searchResult = this.users.filter(
-      (user) => user.lastName === lastName && user.firstName === firstName
-    );
-    console.log('search for:', firstName, lastName);
-    console.log('search result:', searchResult);
-    if (searchResult.length > 0) {
-      return {
-        phoneNumber: searchResult[0].phoneNumber,
-      };
-    }
-    return undefined;
   }
 }

@@ -46,9 +46,15 @@ export class SearchComponent {
 
   search() {
     console.log('search button clicked');
-    this.searchResult = this.searchService.search(
-      this.lastNameInputValue,
-      this.firstNameInputValue
-    );
+    this.searchService
+      .search(this.lastNameInputValue, this.firstNameInputValue)
+      .then((value) => {
+        console.log('FOUND');
+        this.searchResult = value;
+      })
+      .catch(() => {
+        console.log('NOPE');
+        this.searchResult = undefined;
+      });
   }
 }
