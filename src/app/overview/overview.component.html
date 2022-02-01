@@ -1,0 +1,8 @@
+<h1>Overview</h1>
+<ng-container *ngFor="let result of results">
+  <app-overview-detail
+    [firstName]="result.firstName"
+    [lastName]="result.lastName"
+    [phoneNumber]="result.phoneNumber"
+  ></app-overview-detail>
+</ng-container>

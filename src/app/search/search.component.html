@@ -1,0 +1,14 @@
+<h1>Search</h1>
+<app-search-input
+  *ngFor="let form of formInputs"
+  [type]="form.type"
+  [label]="form.label"
+  (valueChange)="valueChange($event)"
+  [value]="defaultInputValue"
+></app-search-input>
+<input type="button" id="search-button" value="Search" (click)="search()" />
+
+<ng-container *ngIf="!!searchResult">
+  <h2>Search result</h2>
+  <pre id="search-results">{{ searchResult | json }}</pre>
+</ng-container>
