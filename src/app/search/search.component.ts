@@ -49,11 +49,9 @@ export class SearchComponent {
     this.searchService
       .search(this.lastNameInputValue, this.firstNameInputValue)
       .then((value) => {
-        console.log('FOUND');
         this.searchResult = value;
       })
       .catch(() => {
-        console.log('NOPE');
         this.searchResult = undefined;
       });
   }
