@@ -1,27 +1,11 @@
 # NgClassicalSchoolTesting
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.5.
+This is a test project to showcase how classical school tests (see ([https://freecontent.manning.com/what-is-a-unit-test-part-2-classical-vs-london-schools/]) are better suited, cause less work and can be done in Angular's Jasmine tests.
 
-## Development server
+The tests coverage 100 % of the code with just 2 tests. The tests are not implementation dependend, as they would with "London school" tests which mock everything.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Run tests
 
-## Code scaffolding
+Run `npm run test` to start the tests. Chrome is required.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+After running the tests there will be a coverage folder which contains an index.html.
