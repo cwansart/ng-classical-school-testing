@@ -79,7 +79,6 @@ describe('Search', () => {
       tick();
       fixture.detectChanges();
 
-      console.log('111', fixture);
       const searchResults = fixture.debugElement.query(
         By.css('#search-results')
       );
@@ -128,39 +127,5 @@ describe('Search', () => {
 
       expect(searchResults).toBeNull();
     }));
-  });
-
-  xdescribe('component tests', () => {
-    it('search for Maria Musterfrau', () => {
-      component.valueChange({
-        id: 'vorname-text-input',
-        value: 'Maria',
-      });
-      component.valueChange({
-        id: 'nachname-text-input',
-        value: 'Musterfrau',
-      });
-
-      component.search();
-
-      expect(component.searchResult).toEqual({
-        phoneNumber: '000000000',
-      });
-    });
-
-    it('search for non-existing Harald Lesch', () => {
-      component.valueChange({
-        id: 'vorname-text-input',
-        value: 'Harald',
-      });
-      component.valueChange({
-        id: 'nachname-text-input',
-        value: 'Lesch',
-      });
-
-      component.search();
-
-      expect(component.searchResult).toBeUndefined();
-    });
   });
 });
